@@ -1,0 +1,66 @@
+﻿
+@{
+    ViewBag.Title = "GetAll";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>GetAll</h2>
+
+<div class="row">
+    <div class="col">
+        <button class="btn btn-secondary col-md-6 text-center" onclick="GetUser()">Agregar</button>
+    </div>
+    <div class="col">
+        <button class="btn btn-danger col-md-6 text-center" onclick="Limpiar()">Limpiar</button>
+    </div>
+</div>
+<p></p>
+<section>
+    <table id="tableUsuario" class="table table-info table-striped table-bordered table-responsive-lg">
+        <thead class="table-dark">
+            <tr>
+                <td class="text-center" style="font-palette:light;">Nombre Usuario</td>
+                <td class="text-center" style="font-palette:light;">Email</td>
+                <td class="text-center" style="font-palette:light;">Dirección</td>
+                <td class="text-center" style="font-palette:light;">Genero</td>
+                <td class="text-center" style="font-palette:light;">Foto</td>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</section>
+
+
+
+
+<script type="text/javascript">
+
+    function GetUser() {
+        $.ajax({
+            url: 'https://randomuser.me/api/',
+            dataType: 'json',
+            success: function (response) {
+                $('#tableUsuario tbody');
+                var valor = '<tr>' +
+                    '<td>' + response.results[0].login.username + '</td>' +
+                    '<td>' + response.results[0].email + '</td>' +
+                    '<td>' + response.results[0].location.street.name + '</td>' +
+                    '<td>' + response.results[0].gender + '</td>' +
+                    '<td>' + `<img src="${response.results[0].picture.large}"/>` + '</td>' +
+                    '</tr>';
+                $('#tableUsuario tbody').append(valor);
+
+            }
+        });
+    }
+
+    function Limpiar() {
+        $('#tableUsuario tbody').empty();
+    }
+
+
+
+
+
+</script>
